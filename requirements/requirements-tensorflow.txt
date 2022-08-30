@@ -1,0 +1,5 @@
+# Install base packages
+
+-r requirements-base.txt
+
+tensorflow==2.9.1 # https://github.com/tensorflow/tensorflow

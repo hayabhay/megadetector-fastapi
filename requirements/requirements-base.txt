@@ -1,0 +1,9 @@
+# Base requirements applicable to all Megadetector versions
+
+fastapi==0.81.0 # https://github.com/tiangolo/fastapi
+google-cloud-storage==2.5.0 # https://github.com/googleapis/python-storage
+httpx==0.23.0  # https://github.com/encode/httpx/
+Pillow==9.2.0  # https://github.com/python-pillow/Pillow
+python-dotenv==0.20.0 # https://github.com/theskumar/python-dotenv
+streamlit==1.12.2 # https://github.com/streamlit/streamlit
+uvicorn==0.18.3 # https://github.com/encode/uvicorn

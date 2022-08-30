@@ -1,0 +1,14 @@
+# Install base packages
+
+
+# Torch CPU only if you need to use Google Cloud Run
+--extra-index-url https://download.pytorch.org/whl/cpu
+-r requirements-base.txt
+matplotlib==3.5.3 # https://github.com/matplotlib/matplotlib
+opencv-python-headless==4.6.0.66 # https://github.com/opencv/opencv-python
+pandas==1.4.3 # https://github.com/pandas-dev/pandas
+PyYAML==6.0 # https://github.com/yaml/pyyaml
+seaborn==0.11.2 # https://github.com/mwaskom/seaborn
+torch==1.9.1 # https://github.com/pytorch/pytorch
+torchvision==0.10.1 # https://github.com/pytorch/vision
+tqdm==4.64.0 # https://github.com/tqdm/tqdm

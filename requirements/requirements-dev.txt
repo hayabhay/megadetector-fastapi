@@ -1,0 +1,24 @@
+# Development packages including production packages
+# Note: Since there aren't any highly specific production packages that can break dev,
+# it's relatively save to directly install all of them
+
+# Install production dependencies for both pytorch & tensorflow versions
+-r requirements-pytorch.txt
+-r requirements-tensorflow.txt
+
+# Code style & quality
+# ------------------------------------------------------------------------------
+black==22.6.0  # https://github.com/psf/black
+
+# Testing
+# ------------------------------------------------------------------------------
+coverage==6.4.4  # https://github.com/nedbat/coveragepy
+flake8==5.0.4  # https://github.com/PyCQA/flake8
+flake8-isort==4.2.0  # https://github.com/gforcada/flake8-isort
+
+
+# These are dev only dependencies
+jupyter==1.0.0
+mypy==0.971  # https://github.com/python/mypy
+pre-commit==2.20.0  # https://github.com/pre-commit/pre-commit
+pytest==7.1.2  # https://github.com/pytest-dev/pytest

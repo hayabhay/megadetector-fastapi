@@ -4,6 +4,10 @@ This repo packages [MegaDetector](https://github.com/microsoft/CameraTraps/blob/
 
 Most of the code is directly copied from MegaDetector's source repo. Any additional code form thin wrappers to streamline some interfaces & dependencies for the API.
 
+**Why FastAPI?** - FastAPI is async-first and also comes with nice things like Pydantic validation & Swagger UI out of the box. Async in the context of cloud endpoints and large batches of images is particularly useful since it allows images to be downloaded in parallel significantly lowering CPU-idle time and its associated cloud costs.
+
+**Why Streamlit** - Streamlit is an extremely simple, pure Python way to build web GUIs. While Swagger UI allows API interactions, the outputs are still raw JSON. Streamlit complements this with visualization of annotated images with trivial amounts of python code.
+
 ![MegaDetector Streamlit demo](/assets/streamlit_demo.gif)
 
 ## Getting Started
@@ -52,14 +56,6 @@ You should now be able to navigate to [http://127.0.0.1:8501](http://127.0.0.1:8
 There is a docker template to containerize the application and deploy it. Currently, the configuration is tailored to create containers that run on CPUs. This is primarily for Cloud based APIs, specifically, Google Cloud Run (soon to be tested).
 
 Deployment strategies like Google Cloud Run spin up instances on demand. In this setting, instead of downloading the MegaDetector model everytime,  it might be useful to create images with the MegaDetector models baked in the container images. However, to keep them light, it is best to only have a specific model in addition to its required dependencies installed (PyTorch & Tensorflow).
-
-## Comments
-
-**Why FastAPI?** - FastAPI is async-first and also comes with nice things like Pydantic validation & Swagger UI out of the box. Async in the context of cloud endpoints and large batches of images is particularly useful since it allows images to be downloaded in parallel significantly lowering CPU-idle time and its associated cloud costs.
-
-**Why Streamlit** - Streamlit is an extremely simple, pure Python way to build web GUIs. While Swagger UI allows API interactions, the outputs are still raw JSON. Streamlit complements this with visualization of annotated images with trivial amounts of python code.
-
-*.. more to come*
 
 ## Issues, Comments & Feedback
 

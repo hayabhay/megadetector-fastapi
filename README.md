@@ -2,6 +2,8 @@
 
 This repo packages [MegaDetector](https://github.com/microsoft/CameraTraps/blob/main/megadetector.md) models and serves them over [FastAPI](https://fastapi.tiangolo.com/). Additionally, it comes with a simple [Streamlit](https://streamlit.io/) UI to visualize & compare annotations from different models.
 
+Most of the code is directly copied from MegaDetector's source repo. Any additional code form thin wrappers to streamline some interfaces & dependencies for the API.
+
 ![MegaDetector Streamlit demo](/assets/streamlit_demo.gif)
 
 ## Getting Started
@@ -52,9 +54,6 @@ There is a docker template to containerize the application and deploy it. Curren
 Deployment strategies like Google Cloud Run spin up instances on demand. In this setting, instead of downloading the MegaDetector model everytime,  it might be useful to create images with the MegaDetector models baked in the container images. However, to keep them light, it is best to only have a specific model in addition to its required dependencies installed (PyTorch & Tensorflow).
 
 ## Comments
-
-This repo has a lot of code directly copied from [MegaDetector's source repo](https://github.com/microsoft/CameraTraps/blob/main/megadetector.md).
-Any additional code are mostly thin wrappers to standardize some interfaces & auto-download dependencies to power the API.
 
 **Why FastAPI?** - FastAPI is async-first and also comes with nice things like Pydantic validation & Swagger UI out of the box. Async in the context of cloud endpoints and large batches of images is particularly useful since it allows images to be downloaded in parallel significantly lowering CPU-idle time and its associated cloud costs.
 

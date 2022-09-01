@@ -115,6 +115,7 @@ def get_megadetector_model(model_version: str, load_multiple_models: bool = Fals
             MODELS = {model_version: model}
     else:
         logger.info(f"{model_version} already in memory!")
+        model = MODELS[model_version]
 
     # Return the model
-    return MODELS[model_version]
+    return model

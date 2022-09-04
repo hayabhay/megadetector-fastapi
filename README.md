@@ -57,6 +57,41 @@ There is a docker template to containerize the application and deploy it. Curren
 
 Deployment strategies like Google Cloud Run spin up instances on demand. In this setting, instead of downloading the MegaDetector model everytime,  it might be useful to create images with the MegaDetector models baked in the container images. However, to keep them light, it is best to only have a specific model in addition to its required dependencies installed (PyTorch & Tensorflow).
 
+## Batch of Images
+
+FastAPI, with uvicorn is async by default i.e. subsequent calls to the server aren't blocked by I/O from previous calls. For synchronous services like Flask, this is usually supported by adding threads/workers to gunicorn. Regardless, to leverage this, the calling application also needs to use an async client like `httpx` or `aiohttp` instead of sync clients like `requests`. Or, it needs to make requests in a threadpool. ([more details](https://www.twilio.com/blog/asynchronous-http-requests-in-python-with-httpx-and-asyncio))
+
+Here is an example of calling this API with `httpx` for a list of image urls (or base64 encoded strings).
+
+```
+import asyncio
+import httpx
+
+# List of image urls to call the API with
+images = [...]
+
+# Async function to get annotation for an image
+async def get_annotation(image, client):
+    response = await client.post(url,json={"image": image})
+    return response.json()["annotation"]
+
+# Use asyncio to make concurrent requests with httpx
+async with httpx.AsyncClient() as client:
+    # Create a list of tasks to run concurrently
+    tasks = [
+        get_annotation(
+            image=image,
+            url="http://127.0.0.1:8000/annotate/",
+            client=client
+        )
+        for image in images
+    ]
+    # Run inference on each image in the list
+    # * operator here simply unpacks the list
+    results = await asyncio.gather(*tasks)
+```
+That's it!
+
 ## Issues, Comments & Feedback
 
 - For bugs & feature requests, please [open an issue](https://github.com/abhay1/megadetector-fastapi/issues/new/choose).

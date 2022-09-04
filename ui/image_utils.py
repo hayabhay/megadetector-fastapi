@@ -15,19 +15,11 @@ TEXTALIGN_RIGHT = 1
 
 
 COLORS = [
-    "AliceBlue",
-    "Red",
-    "RoyalBlue",
-    "Gold",
-    "Chartreuse",
-    "Aqua",
-    "Azure",
     "Beige",
-    "Bisque",
-    "BlanchedAlmond",
-    "BlueViolet",
-    "BurlyWood",
-    "CadetBlue",
+    "Fuchsia",
+    "Pink" "Aqua",
+    "Lime",
+    "Fuchsia",
 ]
 
 
@@ -220,7 +212,7 @@ def draw_bounding_box_on_image(
     expansion=0,
     display_str_list=(),
     use_normalized_coordinates=True,
-    label_font_size=32,
+    label_font_size=28,
     colormap=COLORS,
     textalign=TEXTALIGN_LEFT,
 ):
@@ -292,7 +284,7 @@ def draw_bounding_box_on_image(
     draw.line([(left, top), (left, bottom), (right, bottom), (right, top), (left, top)], width=thickness, fill=color)
 
     try:
-        font = ImageFont.truetype("arial.ttf", label_font_size)
+        font = ImageFont.truetype("roboto.ttf", label_font_size)
     except IOError:
         font = ImageFont.load_default()
 

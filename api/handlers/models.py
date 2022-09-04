@@ -91,7 +91,7 @@ MODELS = {}
 
 
 # Since the models are conditionally loaded to keep the dependencies & footprint light, the return type is Any.
-def get_megadetector_model(model_version: str, load_multiple_models: bool = False) -> Any:
+async def get_megadetector_model(model_version: str, load_multiple_models: bool = False) -> Any:
     """Initializes a MegaDetector model and returns it if it's not already cached
 
     Args:
@@ -104,11 +104,8 @@ def get_megadetector_model(model_version: str, load_multiple_models: bool = Fals
     # global so loaded models can be updated
     global MODELS
 
-    # Check if the model is already loaded
-    if model_version in MODELS:
-        logger.info(f"{model_version} already in memory!")
-        model = MODELS[model_version]
-    else:
+    if model_version not in MODELS:
+        logger.info(f"{model_version} not in memory! Loading..")
         # Create a MegaDetector model object and cache it
         model = MegaDetector(model_version)
 
@@ -116,6 +113,9 @@ def get_megadetector_model(model_version: str, load_multiple_models: bool = Fals
             MODELS[model_version] = model
         else:
             MODELS = {model_version: model}
+    else:
+        logger.info(f"{model_version} already in memory!")
+        model = MODELS[model_version]
 
     # Return the model
     return model

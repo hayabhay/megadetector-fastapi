@@ -18,9 +18,7 @@ BUCKETS = {}
 
 # Function to get a PIL Image from google cloud storage from a gs:// url
 # This is mainly for buckets without public access
-# TODO: This download is synchronous - https://github.com/talkiq/gcloud-aio promises async download
-# Until then using https urls is an option (increased per download latency but async makes it faster when downloading multiple images)
-def load_gs_image(image_gs_loc: str) -> Image:
+async def load_gs_image(image_gs_loc: str) -> Image:
     """Function to load an image directly from a google storage link"""
     global storage_client
     global BUCKETS
@@ -57,7 +55,7 @@ async def load_web_image(image_url: str, client: httpx.AsyncClient = None) -> Im
         # If no client is passed, treat this as a one-off and create a new client
         if not client:
             async with httpx.AsyncClient() as client:
-                response = await client.get(image_url)
+                response = await client.get(image_url, timeout=30)
         # Use the passed client to get the image
         else:
             response = await client.get(image_url)
@@ -71,7 +69,7 @@ async def load_web_image(image_url: str, client: httpx.AsyncClient = None) -> Im
 
 
 # Function to get a PIL Image from a string
-def load_image_from_binary_string(image_byte_string: str) -> Image:
+async def load_image_from_binary_string(image_byte_string: str) -> Image:
     """Function to load an image directly from a binary string"""
     try:
         # Try to interpret the bytes as an image
@@ -85,16 +83,16 @@ def load_image_from_binary_string(image_byte_string: str) -> Image:
 
 
 # Function to load an image from the web, gs or a binary string
-async def load_image(image_src: str, client: httpx.AsyncClient) -> Image:
+async def load_image(image_src: str, client: httpx.AsyncClient = None) -> Image:
     """Function that takes in a string, determines the source and returns a correctly formatted PIL Image"""
     # Load the image depending on the type
     # TODO: This is a little shabby and fails if the file is not an image without a specific error message
     if image_src.startswith(("http://", "https://")):
         image = await load_web_image(image_src, client)
     elif image_src.startswith("gs://"):
-        image = load_gs_image(image_src)
+        image = await load_gs_image(image_src)
     else:
-        image = load_image_from_binary_string(image_src)
+        image = await load_image_from_binary_string(image_src)
 
     # ==========================================================================================
     # THIS CODE IS FROM

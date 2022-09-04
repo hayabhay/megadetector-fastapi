@@ -91,7 +91,7 @@ MODELS = {}
 
 
 # Since the models are conditionally loaded to keep the dependencies & footprint light, the return type is Any.
-def get_megadetector_model(model_version: str, load_multiple_models: bool = False) -> Any:
+async def get_megadetector_model(model_version: str, load_multiple_models: bool = False) -> Any:
     """Initializes a MegaDetector model and returns it if it's not already cached
 
     Args:

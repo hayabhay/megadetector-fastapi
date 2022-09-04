@@ -11,7 +11,7 @@ RUN apt-get -y update \
     unzip
 
 # Set working directory to app
-WORKDIR /app
+WORKDIR /api
 
 # Copy the entire requirements directory
 COPY ./requirements /requirements

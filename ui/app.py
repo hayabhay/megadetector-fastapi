@@ -77,7 +77,7 @@ def get_annotations(
     """Call MegaDetector API to annotate the image"""
     # Set payload with image source & megadetector version
     payload = {
-        "images": [image_src],
+        "image": image_src,
         "megadetector_version": megadetector_version,
         "load_multiple_models": load_multiple_models,
     }
@@ -86,7 +86,7 @@ def get_annotations(
         payload["detection_threshold"] = detection_threshold
 
     # Send request to MegaDetector API
-    endpoint = f"{MEGADETECTOR_API_URL}/annotate_images/"
+    endpoint = f"{MEGADETECTOR_API_URL}/annotate/"
     response = httpx.post(endpoint, json=payload, timeout=120)
 
     annotation = response.json()
@@ -177,7 +177,7 @@ if image_src and selected_model_versions:
         )
 
         # Get the first annotion since there is only one image
-        annotation = annotations["annotations"][0]
+        annotation = annotations["annotation"]
 
         # First create a collapsible section raw output
         with tabs[i].expander("API Response (JSON)"):

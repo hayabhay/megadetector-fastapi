@@ -17,7 +17,8 @@ TEXTALIGN_RIGHT = 1
 COLORS = [
     "Beige",
     "Fuchsia",
-    "Pink" "Aqua",
+    "Pink",
+    "Aqua",
     "Lime",
     "Fuchsia",
 ]
